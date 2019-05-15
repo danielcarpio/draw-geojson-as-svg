@@ -37,6 +37,11 @@ function draw_geojson_feature_in(id, feature){
 
 	for (let index = 0; index < data.length-1; index++) {
 		var d = data[index];
+		if(index+1 == data.length){
+			var dnext = data[0];	
+		}else{
+			var dnext = data[index+1];
+		}
 		svg.append("line")
 			.style("stroke", '#000000')
 			.attr("x1", xRange(d[0]))
