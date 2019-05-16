@@ -35,18 +35,14 @@ function draw_geojson_feature_in(id, feature){
 		.attr("width", width)
 		.attr("height", height);
 
-	for (let index = 0; index < data.length-1; index++) {
-		var d = data[index];
-		if(index+1 == data.length){
-			var dnext = data[0];	
-		}else{
-			var dnext = data[index+1];
-		}
-		svg.append("line")
-			.style("stroke", '#000000')
-			.attr("x1", xRange(d[0]))
-			.attr("y1", yRange(d[1]))
-			.attr("x2", xRange(dnext[0]))
-			.attr("y2", yRange(dnext[1]))	
-	}
+	svg.selectAll("polygon").data([data]).enter()
+		.append("polygon")
+		.attr("points", function(d){
+			return d.map(function(d){
+				return [xRange(d[0]), yRange(d[1])].join(",")
+			}).join(" ");
+		})
+		.attr("stroke", '#000000')
+		.attr("stroke-width", 2)
+		.attr("fill", "white");
 }
